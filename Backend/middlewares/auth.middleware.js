@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports.authUse=async (req,res,next) =>{
-    const token= req.cookie.token || req.header.authprization?.split(' ')[ 1 ];
+    const token= req.cookie.token || req.header.authorization?.split(' ')[ 1 ];
     if(!token){
         return res.status(401).json({message: 'Unauthorized'});
     }
@@ -18,7 +18,7 @@ module.exports.authUse=async (req,res,next) =>{
 
     try {
         const decoded= jwt.verify(token,process.env.JWT_SECRET);
-        const user = await userModel.findById(decoded,_id);
+        const user = await userModel.findById(decoded._id);
 
         req.user = user;
 
